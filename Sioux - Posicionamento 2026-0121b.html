@@ -1,0 +1,2922 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <title>Sioux – Jornadas Digitais Completas</title>
+    <style>
+        /* ═══════════════════════════════════════════════════════════════════════════════
+           DESIGN TOKENS – BASEADO EM ZEROHEIGHT SIOUX
+           ═══════════════════════════════════════════════════════════════════════════════ */
+
+        :root {
+            --color-brand-primary: #0293D6;
+            --color-brand-primary-dark: #003D5E;
+            --color-brand-primary-light: #D3EAF2;
+            --color-brand-secondary: #00ACBF;
+            --color-surface-background: #ffffff;
+            --color-surface-elevated: #D3EAF2;
+            --color-surface-muted: #f0f4f7;
+            --color-border-default: #CFD3D6;
+            --color-text-default: #052433;
+            --color-text-secondary: #6E7C85;
+            --color-text-tertiary: #9FA7AE;
+            --color-text-inverse: #ffffff;
+            --color-feedback-success: #00CCA3;
+            --color-feedback-error: #EB5477;
+
+            /* Tipografia */
+            --font-family-heading: 'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-family-body: 'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+            --font-size-h1: 3.5rem;
+            --font-size-h2: 2.5rem;
+            --font-size-h3: 1.75rem;
+            --font-size-h4: 1.5rem;
+            --font-size-body-lg: 1.125rem;
+            --font-size-body: 1rem;
+            --font-size-body-sm: 0.875rem;
+            --font-size-caption: 0.75rem;
+
+            --font-weight-bold: 700;
+            --font-weight-semibold: 600;
+            --font-weight-medium: 500;
+            --font-weight-regular: 400;
+
+            /* Espaçamento */
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            --space-3xl: 4rem;
+            --space-4xl: 6rem;
+
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+
+            /* Sombras */
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.16);
+
+            /* Motion */
+            --motion-fast: 150ms ease-in-out;
+            --motion-normal: 250ms ease-in-out;
+            --motion-slow: 400ms ease-in-out;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════════════
+           RESET E BASE
+           ═══════════════════════════════════════════════════════════════════════════════ */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family-body);
+            font-size: var(--font-size-body);
+            line-height: 1.6;
+            color: var(--color-text-default);
+            background-color: var(--color-surface-background);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════════════
+           TIPOGRAFIA
+           ═══════════════════════════════════════════════════════════════════════════════ */
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: var(--font-family-heading);
+            font-weight: var(--font-weight-bold);
+            line-height: 1.2;
+            margin-bottom: var(--space-md);
+        }
+
+        h1 {
+            font-size: var(--font-size-h1);
+            margin-bottom: var(--space-lg);
+        }
+
+        h2 {
+            font-size: var(--font-size-h2);
+            margin-bottom: var(--space-lg);
+        }
+
+        h3 {
+            font-size: var(--font-size-h3);
+            margin-bottom: var(--space-md);
+        }
+
+        h4 {
+            font-size: var(--font-size-h4);
+            margin-bottom: var(--space-md);
+        }
+
+        p {
+            margin-bottom: var(--space-md);
+            color: var(--color-text-secondary);
+        }
+
+        a {
+            color: var(--color-brand-primary);
+            text-decoration: none;
+            transition: color var(--motion-fast);
+        }
+
+        a:hover {
+            color: var(--color-brand-primary-dark);
+            text-decoration: underline;
+        }
+
+        a:focus {
+            outline: 3px solid var(--color-brand-primary);
+            outline-offset: 2px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════════════
+           LAYOUT E CONTAINER
+           ═══════════════════════════════════════════════════════════════════════════════ */
+
+        .container {
+            width: 100%;
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        .grid {
+            display: grid;
+            gap: var(--space-lg);
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .grid-1 {
+            grid-template-columns: 1fr;
+        }
+
+        @media (max-width: 1024px) {
+
+            .grid-4,
+            .grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+
+            .grid-4,
+            .grid-3,
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════════════
+           BOTÕES
+           ═══════════════════════════════════════════════════════════════════════════════ */
+
+        .btn {
+            display: inline-block;
+            padding: var(--space-md) var(--space-xl);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-semibold);
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all var(--motion-fast);
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background-color: var(--color-brand-primary);
+            color: var(--color-text-inverse);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-brand-primary-dark);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary:focus {
+            outline: 3px solid var(--color-brand-primary);
+            outline-offset: 2px;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--color-brand-primary);
+            border: 2px solid var(--color-brand-primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--color-brand-primary-light);
+        }
+
+        .btn-secondary:focus {
+            outline: 3px solid var(--color-brand-primary);
+            outline-offset: 2px;
+        }
+
+        .btn-ghost {
+            background-color: transparent;
+            color: var(--color-brand-primary);
+            padding: var(--space-md) 0;
+            border-bottom: 2px solid transparent;
+        }
+
+        /*
+        .btn-ghost:hover {
+            border-bottom-color: var(--color-brand-primary);
+        }
+        */
+
+        /* ═══════════════════════════════════════════════════════════════════════════════
+           COMPONENTES
+           ═══════════════════════════════════════════════════════════════════════════════ */
+
+        .card {
+            background: var(--color-surface-background);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            transition: all var(--motion-normal);
+        }
+
+        .card:focus-within {
+            outline: 3px solid var(--color-brand-primary);
+            outline-offset: 0;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: var(--space-xs) var(--space-sm);
+            background-color: var(--color-surface-muted);
+            color: var(--color-text-secondary);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-caption);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--space-sm);
+        }
+
+        .tag-primary {
+            background-color: var(--color-brand-primary-light);
+            color: var(--color-brand-primary);
+        }
+
+        .section {
+            padding: var(--space-4xl) 0;
+        }
+
+        .section-intro {
+            margin-bottom: var(--space-3xl);
+            text-align: center;
+        }
+
+        .section-intro h2 {
+            margin-bottom: var(--space-lg);
+        }
+
+        .section-intro p {
+            font-size: var(--font-size-body-lg);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .home-pillars {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: var(--space-lg);
+        }
+
+        .pillars-stack {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .home-pillar-card {
+            background: var(--color-surface-background);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .home-pillar-card h3 {
+            margin-bottom: var(--space-sm);
+        }
+
+        .home-pillar-card p {
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-lg);
+        }
+
+        .home-pillar-card .btn-ghost {
+            margin-top: auto;
+            align-self: center;
+        }
+
+        .ai-layer {
+            margin-top: var(--space-xl);
+            padding: var(--space-2xl);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(0, 172, 191, 0.25);
+            background: linear-gradient(135deg, rgba(0, 172, 191, 0.12), rgba(0, 172, 191, 0.03));
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2xl);
+        }
+
+        .ai-layer .home-pillars {
+            margin-bottom: var(--space-sm);
+        }
+
+        .ai-layer-content {
+            text-align: center;
+            position: relative;
+        }
+
+        .ai-connector {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            align-items: center;
+            margin: 0 0 var(--space-xl);
+            position: relative;
+            padding-top: var(--space-sm);
+        }
+
+        .ai-connector::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 2px;
+            height: 2px;
+            background: rgba(0, 172, 191, 0.35);
+        }
+
+        .ai-node {
+            position: relative;
+            height: 40px;
+        }
+
+        .ai-node::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 10px;
+            width: 2px;
+            height: 30px;
+            background: rgba(0, 172, 191, 0.35);
+        }
+
+        .ai-node::after {
+            content: "";
+            position: absolute;
+            left: calc(50% - 6px);
+            top: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 999px;
+            background: var(--color-brand-primary);
+            box-shadow: 0 0 0 6px rgba(0, 172, 191, 0.12);
+        }
+
+        .ai-layer .tag {
+            margin-bottom: var(--space-sm);
+        }
+
+        .ai-layer h4 {
+            margin: 0 0 var(--space-xs);
+        }
+
+        .ai-layer p {
+            margin: 0;
+            color: var(--color-text-secondary);
+        }
+
+        @media (max-width: 900px) {
+            .home-pillars {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-layer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .ai-connector {
+                display: none;
+            }
+        }
+
+        .service-grid {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2xl);
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, rgba(0, 172, 191, 0.08), rgba(0, 172, 191, 0.02));
+            border: 1px solid rgba(0, 172, 191, 0.3);
+            border-radius: var(--radius-lg);
+            padding: var(--space-2xl);
+            box-shadow: 0 28px 60px rgba(10, 18, 28, 0.16);
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: minmax(240px, 1fr) 1.4fr;
+            gap: var(--space-2xl);
+            align-items: stretch;
+        }
+
+        .service-card>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top left, rgba(0, 172, 191, 0.2), transparent 55%);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .service-card h4 {
+            font-size: clamp(1.4rem, 2.6vw, 1.8rem);
+            margin-bottom: var(--space-md);
+        }
+
+        .service-card .service-desc {
+            color: var(--color-text-default);
+            font-size: var(--font-size-body-lg);
+            margin-bottom: var(--space-lg);
+        }
+
+        .service-main {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .service-cta {
+            margin-top: auto;
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-brand-primary);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        .service-cta:hover {
+            color: var(--color-brand-primary-dark);
+        }
+
+        .competency-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .competency-list li {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            padding: var(--space-sm) var(--space-md) var(--space-sm) calc(var(--space-md) + 10px);
+            position: relative;
+            background: rgba(0, 172, 191, 0.08);
+            border: 1px solid rgba(0, 172, 191, 0.2);
+            border-radius: var(--radius-md);
+        }
+
+        .competency-list li::before {
+            content: "";
+            position: absolute;
+            left: var(--space-sm);
+            top: 12px;
+            width: 6px;
+            height: calc(100% - 24px);
+            border-radius: 999px;
+            background: var(--color-brand-primary);
+        }
+
+        .competency-title {
+            font-weight: var(--font-weight-semibold);
+            font-size: var(--font-size-body-lg);
+            color: var(--color-text-default);
+        }
+
+        .competency-desc {
+            font-size: var(--font-size-body-sm);
+            color: var(--color-text-secondary);
+            line-height: 1.5;
+        }
+
+        .pillar-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+            margin: var(--space-2xl) 0 var(--space-3xl);
+        }
+
+        .pillar-nav a {
+            text-decoration: none;
+            padding: var(--space-sm) var(--space-md);
+            border-radius: 999px;
+            border: 1px solid var(--color-border-default);
+            color: var(--color-text-default);
+            font-size: var(--font-size-body-sm);
+        }
+
+        .pillar-nav a:hover {
+            border-color: var(--color-brand-primary);
+            color: var(--color-brand-primary);
+        }
+
+        .featured-carousel {
+            margin-top: var(--space-4xl);
+        }
+
+        .featured-track {
+            display: flex;
+            gap: var(--space-lg);
+            overflow-x: auto;
+            padding-bottom: var(--space-md);
+            scroll-snap-type: x mandatory;
+        }
+
+        .featured-card {
+            min-width: 280px;
+            max-width: 320px;
+            flex: 0 0 auto;
+            scroll-snap-align: start;
+        }
+
+        .featured-card h5 {
+            margin: var(--space-sm) 0;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════════════
+           PROJETOS EM AÇÃO (MODELO OUR WORK)
+           ═══════════════════════════════════════════════════════════════════════════════ */
+
+        .section-work {
+            background-color: var(--color-surface-elevated);
+            position: relative;
+            overflow: visible;
+        }
+
+        .work-intro {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: var(--space-xl);
+            margin-bottom: var(--space-3xl);
+        }
+
+        .work-intro h2 {
+            margin-bottom: var(--space-md);
+        }
+
+        .work-scroll-hint {
+            font-size: var(--font-size-caption);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--color-text-muted);
+            white-space: nowrap;
+        }
+
+        .work-viewer {
+            position: relative;
+            height: calc(var(--work-card-count, 3) * 100vh);
+        }
+
+        .work-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: stretch;
+        }
+
+        .work-cards {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            margin: 0;
+            padding: var(--work-header-offset, 160px) var(--space-2xl) var(--space-2xl);
+            box-sizing: border-box;
+        }
+
+        .work-card {
+            position: absolute;
+            inset: 0;
+            height: 100%;
+            background: #052433;
+            border-radius: 0;
+            padding: var(--space-3xl);
+            box-shadow: 0 24px 60px rgba(4, 18, 24, 0.4);
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            pointer-events: none;
+            transition: opacity 0.4s ease, transform 0.5s ease;
+            color: #E7F4F7;
+            box-sizing: border-box;
+        }
+
+        .work-card.is-active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .work-card-meta {
+            display: flex;
+            padding-top: 160px;
+            align-items: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+        }
+
+        .work-index {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            line-height: 1;
+            color: #8FE7F0;
+        }
+
+        .work-card h3 {
+            font-size: clamp(1.5rem, 2.4vw, 2.2rem);
+            margin-bottom: var(--space-md);
+            color: #F4FDFF;
+        }
+
+        .work-card-desc {
+            font-size: var(--font-size-body-lg);
+            margin-bottom: var(--space-md);
+            color: rgba(231, 244, 247, 0.9);
+        }
+
+        .work-card-metric {
+            font-weight: bold;
+            color: #A7F1F7;
+            margin-bottom: var(--space-lg);
+        }
+
+        .work-card .tag-primary {
+            background-color: rgba(143, 231, 240, 0.18);
+            color: #D9FAFD;
+            border: 1px solid rgba(143, 231, 240, 0.35);
+        }
+
+        .work-card a {
+            color: #D9FAFD;
+        }
+
+        /*
+        .work-card .btn-ghost {
+            border-color: rgba(143, 231, 240, 0.45);
+            color: #D9FAFD;
+        }
+
+        .work-card .btn-ghost:hover {
+            background-color: rgba(143, 231, 240, 0.18);
+        }
+        */
+        .work-progress {
+            position: absolute;
+            right: var(--space-xl);
+            bottom: var(--space-3xl);
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-size: var(--font-size-caption);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(231, 244, 247, 0.7);
+        }
+
+        @media (max-width: 960px) {
+            .work-intro {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .work-sticky {
+                padding-top: 0;
+            }
+
+            .work-card {
+                padding: var(--space-2xl);
+            }
+
+            .work-cards {
+                padding-top: var(--work-header-offset, 160px);
+            }
+
+            .work-progress {
+                right: var(--space-lg);
+            }
+        }
+
+        @media (max-width: 720px) {
+            .work-card {
+                padding: var(--space-xl);
+            }
+
+            .work-progress {
+                position: static;
+                margin-top: var(--space-lg);
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════════════
+           NEWSLETTER (INSIGHTS)
+           ═══════════════════════════════════════════════════════════════════════════════ */
+
+        .insights-newsletter {
+            margin-top: var(--space-3xl);
+            padding: var(--space-2xl);
+            background: var(--color-surface);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-xl);
+        }
+
+        .insights-newsletter h3 {
+            margin: 0 0 var(--space-sm);
+        }
+
+        .insights-newsletter p {
+            margin: 0;
+            color: var(--color-text-secondary);
+            max-width: 520px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+        }
+
+        .newsletter-form input {
+            width: auto;
+            min-width: 260px;
+            flex: 1;
+        }
+
+        @media (max-width: 900px) {
+            .insights-newsletter {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .newsletter-form {
+                width: 100%;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════════════
+           POR QUE SIOUX
+           ═══════════════════════════════════════════════════════════════════════════════ */
+
+        .differentials {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+            margin: 0 auto var(--space-3xl);
+            max-width: 1100px;
+        }
+
+        .differential-row {
+            display: grid;
+            grid-template-columns: minmax(180px, 280px) 1fr;
+            gap: var(--space-lg);
+            align-items: center;
+            padding: var(--space-lg) var(--space-xl);
+            background: linear-gradient(90deg, rgba(2, 147, 214, 0.12), rgba(2, 147, 214, 0.02));
+            border: 1px solid var(--color-brand-primary-light);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .differential-title {
+            font-weight: var(--font-weight-semibold);
+            font-size: var(--font-size-body-lg);
+            color: var(--color-text-default);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .differential-title span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            background-color: var(--color-brand-primary);
+            color: var(--color-text-inverse);
+            font-size: var(--font-size-body-sm);
+            font-weight: var(--font-weight-semibold);
+            flex-shrink: 0;
+        }
+
+        .differential-row p {
+            margin: 0;
+            font-size: var(--font-size-body);
+        }
+
+        .client-carousel {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: var(--space-xl);
+            border-top: 1px solid var(--color-border-default);
+        }
+
+        .client-carousel h3 {
+            margin-bottom: var(--space-sm);
+        }
+
+        .client-carousel p {
+            margin-bottom: var(--space-lg);
+            font-size: var(--font-size-body-lg);
+        }
+
+        .carousel-shell {
+            overflow: hidden;
+            padding: var(--space-md) 0;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: var(--space-lg);
+            width: max-content;
+            animation: client-scroll 28s linear infinite;
+        }
+
+        .carousel-shell:hover .carousel-track {
+            animation-play-state: paused;
+        }
+
+        .carousel-item {
+            text-align: center;
+            padding: var(--space-md);
+        }
+
+        .carousel-logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 160px;
+            height: 160px;
+            padding: var(--space-md);
+            border-radius: 999px;
+            background-color: var(--color-surface-elevated);
+            border: 1px solid var(--color-border-default);
+            color: var(--color-text-default);
+            font-weight: var(--font-weight-semibold);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            font-size: var(--font-size-body-sm);
+        }
+
+        .carousel-item p {
+            display: none;
+        }
+
+        @keyframes client-scroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .differential-row {
+                grid-template-columns: 1fr;
+                gap: var(--space-sm);
+            }
+
+            .carousel-item {
+                min-width: 180px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .carousel-track {
+                animation: none;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════════════
+           HEADER E NAVEGAÇÃO
+           ═══════════════════════════════════════════════════════════════════════════════ */
+
+        header {
+            background-color: var(--color-surface-background);
+            border-bottom: 1px solid var(--color-border-default);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--motion-normal);
+        }
+
+        /* Header transparente ao rolar */
+        header.scrolled {
+            background-color: rgba(255, 255, 255, 0.8);
+            /* 90% de opacidade */
+            backdrop-filter: blur(10px);
+            /* Efeito blur no fundo */
+            -webkit-backdrop-filter: blur(10px);
+            /* Safari */
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Fixo APENAS em desktop */
+        @media (min-width: 769px) {
+            header {
+                position: sticky;
+                top: 0;
+            }
+        }
+
+        /* Efeito de sombra ao rolar */
+        header.scrolled {
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-lg) 0;
+        }
+
+        .logo {
+            font-size: var(--font-size-h3);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-brand-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            min-height: 44px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: var(--space-xl);
+        }
+
+        nav a {
+            color: var(--color-text-default);
+            font-weight: var(--font-weight-medium);
+            display: inline-block;
+            padding: var(--space-md) 0;
+            border-bottom: 3px solid transparent;
+            transition: border-color var(--motion-fast);
+        }
+
+        nav a:hover {
+            color: var(--color-brand-primary);
+            border-bottom-color: var(--color-brand-primary);
+            text-decoration: none;
+        }
+
+        nav a:focus {
+            outline: 3px solid var(--color-brand-primary);
+            outline-offset: 2px;
+        }
+
+        nav a.active {
+            color: var(--color-brand-primary);
+            border-bottom-color: var(--color-brand-primary);
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: var(--font-size-h3);
+            color: var(--color-text-default);
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        .nav-toggle:focus {
+            outline: 3px solid var(--color-brand-primary);
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--color-surface-background);
+                flex-direction: column;
+                border-bottom: 1px solid var(--color-border-default);
+            }
+
+            nav.active {
+                display: flex;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+                padding: var(--space-lg);
+            }
+
+            nav a {
+                padding: var(--space-md) 0;
+                border-bottom: none;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════════════
+           HERO
+           ═══════════════════════════════════════════════════════════════════════════════ */
+
+        .hero {
+            background: linear-gradient(135deg, var(--color-surface-elevated) 0%, var(--color-surface-background) 100%);
+            padding: var(--space-4xl) 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            color: var(--color-text-default);
+            margin-bottom: var(--space-lg);
+        }
+
+        .hero-subtitle {
+            font-size: var(--font-size-h4);
+            color: var(--color-text-secondary);
+            max-width: 960px;
+            margin: 0 auto var(--space-3xl);
+            line-height: 1.8;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: var(--space-lg);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════════════
+           BREADCRUMB
+           ═══════════════════════════════════════════════════════════════════════════════ */
+
+        .breadcrumb {
+            display: flex;
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+            font-size: var(--font-size-body-sm);
+        }
+
+        .breadcrumb a {
+            color: var(--color-brand-primary);
+        }
+
+        .breadcrumb span {
+            color: var(--color-text-tertiary);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════════════
+           FORMULÁRIO
+           ═══════════════════════════════════════════════════════════════════════════════ */
+
+        .form-group {
+            margin-bottom: var(--space-lg);
+        }
+
+        label {
+            display: block;
+            font-weight: var(--font-weight-medium);
+            margin-bottom: var(--space-sm);
+            color: var(--color-text-default);
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: var(--space-md);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: var(--font-size-body);
+            transition: border-color var(--motion-fast);
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--color-brand-primary);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        input.error,
+        select.error,
+        textarea.error {
+            border-color: var(--color-feedback-error);
+        }
+
+        .error-message {
+            color: var(--color-feedback-error);
+            font-size: var(--font-size-body-sm);
+            margin-top: var(--space-xs);
+        }
+
+        .success-message {
+            color: var(--color-feedback-success);
+            font-size: var(--font-size-body);
+            padding: var(--space-md);
+            background-color: rgba(16, 185, 129, 0.1);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-lg);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════════════
+           FOOTER
+           ═══════════════════════════════════════════════════════════════════════════════ */
+
+        footer {
+            background-color: #052433;
+            color: #ffffff;
+            padding: var(--space-3xl) 0;
+            margin-top: var(--space-4xl);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-3xl);
+            margin-bottom: var(--space-3xl);
+        }
+
+        .footer-section h4 {
+            color: #ffffff;
+            margin-bottom: var(--space-lg);
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section li {
+            margin-bottom: var(--space-md);
+        }
+
+        .footer-section a {
+            color: #00ACBF;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: var(--space-2xl);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #CFD3D6;
+            font-size: 0.875rem;
+        }
+
+        @media(max-width:768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════════════
+           UTILITÁRIOS
+           ═══════════════════════════════════════════════════════════════════════════════ */
+
+        .hidden {
+            display: none !important;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .loader {
+            border: 4px solid var(--color-border-default);
+            border-top: 4px solid var(--color-brand-primary);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: var(--space-md);
+            margin-bottom: var(--space-2xl);
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: var(--space-sm) var(--space-lg);
+            border: 1px solid var(--color-border-default);
+            background-color: var(--color-surface-background);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--motion-fast);
+            font-size: var(--font-size-body);
+            min-height: 44px;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--color-brand-primary);
+        }
+
+        .filter-btn.active {
+            background-color: var(--color-brand-primary);
+            color: white;
+            border-color: var(--color-brand-primary);
+        }
+
+        .filter-btn:focus {
+            outline: 3px solid var(--color-brand-primary);
+            outline-offset: 2px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: var(--space-2xl);
+            border-radius: var(--radius-lg);
+            max-width: 600px;
+            width: 90%;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-close {
+            float: right;
+            background: none;
+            border: none;
+            font-size: var(--font-size-h2);
+            cursor: pointer;
+            color: var(--color-text-secondary);
+        }
+
+        .modal-close:focus {
+            outline: 3px solid var(--color-brand-primary);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         HEADER
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <a href="#" class="logo" onclick="navigateTo('home'); return false;">SIOUX</a>
+                <button class="nav-toggle" onclick="toggleMenu()" aria-label="Abrir menu de navegação">☰</button>
+                <nav id="nav-menu">
+                    <ul>
+                        <li><a href onclick="navigateTo('o-que-fazemos'); return false" class="nav-link">O que
+                                fazemos</a></li>
+                        <li><a href onclick="navigateTo('nossos-projetos'); return false" class="nav-link">Nossos
+                                projetos</a></li>
+                        <!--<li><a href onclick="navigateTo('insights'); return false" class="nav-link">Insights</a></li>-->
+                        <li><a href onclick="navigateTo('sobre-nos'); return false" class="nav-link">Sobre nós</a></li>
+                        <!--<li><a href onclick="navigateTo('carreiras'); return false" class="nav-link">Carreiras</a></li>-->
+                        <li><a href onclick="navigateTo('contato'); return false" class="nav-link">Contato</a></li>
+                    </ul>
+                </nav>
+                <div class="language-switcher">
+                    <!--<label for="language-select"
+                        style="font-size:0.875rem;color:#6E7C85;font-weight:500;margin-right:4px;">Idioma:</label>-->
+                    <select id="language-select"
+                        style="padding:4px 8px;border:1px solid #CFD3D6;border-radius:4px;background:#fff;font-size:0.875rem;font-weight:500;cursor:pointer;">
+                        <option value="pt-BR" selected>PT-BR</option>
+                        <option value="pt-PT">PT-PT</option>
+                        <option value="en">EN</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         HOME
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <div id="page-home" class="page active">
+        <!-- HERO -->
+        <section class="hero">
+            <div class="container" style="min-height: 500px;">
+                <h1>Aceleramos sua jornada digital de ponta a ponta.</h1>
+                <!-- <div class="hero-actions">
+                    <button class="btn btn-primary" onclick="navigateTo('nossos-projetos')">Conheça nossos
+                        projetos</button>
+                </div> -->
+            </div>
+        </section>
+
+        <!-- O QUE FAZEMOS -->
+        <section class="section">
+            <div class="container">
+                <div class="section-intro">
+                    <h2>Como transformamos o seu negócio</h2>
+                    <p class="hero-subtitle" style="max-width: 960px; font-size: 1.5rem;">Conectamos comunicação, experiência e tecnologia para construir jornadas
+                        digitais completas, da presença de marca aos sistemas mais complexos, com foco em resultado,
+                        segurança e evolução contínua.</p>
+                    <!-- <p>Desenvolvemos jornadas digitais completas que conectam pessoas e marcas por meio de estratégia,
+                        comunicação e produtos digitais prontos para escalar.</p>-->
+                </div>
+                <div class="pillars-stack">
+                    <div class="ai-layer">
+                        <div class="home-pillars">
+                            <div class="home-pillar-card">
+                                <h3>Comunicação e Performance</h3>
+                                <p>Marca e demanda conectadas a objetivos claros, com conteúdo e mídia orientados a resultado.</p>
+                                <a href="#" class="btn btn-ghost"
+                                    onclick="navigateTo('comunicacao-e-performance'); return false;">Conheça os serviços →</a>
+                            </div>
+                            <div class="home-pillar-card">
+                                <h3>Produto e Experiência</h3>
+                                <p>Jornadas digitais desejáveis, desenhadas com pesquisa, usabilidade e foco em adoção.</p>
+                                <a href="#" class="btn btn-ghost"
+                                    onclick="navigateTo('produto-e-experiencia'); return false;">Conheça os serviços →</a>
+                            </div>
+                            <div class="home-pillar-card">
+                                <h3>Tecnologia e Escala</h3>
+                                <p>Sistemas e plataformas robustas, com arquitetura escalável e governança técnica.</p>
+                                <a href="#" class="btn btn-ghost"
+                                    onclick="navigateTo('tecnologia-e-escala'); return false;">Conheça os serviços →</a>
+                            </div>
+                        </div>
+                        <div class="ai-connector" aria-hidden="true">
+                            <span class="ai-node"></span>
+                            <span class="ai-node"></span>
+                            <span class="ai-node"></span>
+                        </div>
+                        <div class="ai-layer-content">
+                            <h4>IA, Dados e Automação</h4>
+                            <p>Potencializa os três pilares com inteligência aplicada, eficiência operacional e decisões
+                                orientadas por dados.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJETOS EM AÇÃO -->
+        <section class="section section-work" data-component-name="section-our-work" style="--work-card-count: 3;">
+            <div class="container">
+                <div class="work-intro">
+                    <div>
+                        <h2>Projetos que materializam objetivos</h2>
+                        <!--<p>Projetos que conectam comunicação, experiência e tecnologia para gerar crescimento,
+                            eficiência
+                            e previsibilidade no digital.</p>-->
+                    </div>
+                    <span class="work-scroll-hint">Role para explorar ↓</span>
+                </div>
+            </div>
+            <div class="work-viewer" data-work-viewer>
+                <div class="work-sticky">
+                    <div class="work-cards">
+                        <article class="work-card is-active" data-work-card>
+                            <div class="work-card-meta">
+                                <span class="work-index">01</span>
+                                <span class="tag tag-primary">Comunicação + Tecnologia</span>
+                            </div>
+                            <h3>Reposicionamento de marca fintech</h3>
+                            <p class="work-card-desc">Estratégia de comunicação digital integrada com novo website de
+                                alta
+                                performance.</p>
+                            <p class="work-card-metric">+35% conversão em canal digital</p>
+                            <a href="#" class="btn btn-ghost" onclick="navigateTo('projeto-1'); return false;">Conheça o
+                                projeto →</a>
+                        </article>
+                        <article class="work-card" data-work-card>
+                            <div class="work-card-meta">
+                                <span class="work-index">02</span>
+                                <span class="tag tag-primary">Produto + Experiência</span>
+                            </div>
+                            <h3>Plataforma de e-learning empresarial</h3>
+                            <p class="work-card-desc">Redesign e operação de plataforma de treinamento corporativo com
+                                50k+
+                                usuários.</p>
+                            <p class="work-card-metric">+42% engajamento</p>
+                            <a href="#" class="btn btn-ghost" onclick="navigateTo('projeto-2'); return false;">Conheça o
+                                projeto →</a>
+                        </article>
+                        <article class="work-card" data-work-card>
+                            <div class="work-card-meta">
+                                <span class="work-index">03</span>
+                                <span class="tag tag-primary">Tecnologia + Dados</span>
+                            </div>
+                            <h3>Dashboard analytics em tempo real</h3>
+                            <p class="work-card-desc">Plataforma de BI integrada com múltiplas fontes de dados e
+                                automações.</p>
+                            <p class="work-card-metric">60% redução em tempo de análise</p>
+                            <a href="#" class="btn btn-ghost" onclick="navigateTo('projeto-3'); return false;">Conheça o
+                                projeto →</a>
+                        </article>
+                        <div class="work-progress" aria-hidden="true">
+                            <span data-work-current>01</span>
+                            <span>—</span>
+                            <span data-work-total>03</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div style="text-align: center; margin-top: var(--space-3xl);">
+                    <button class="btn btn-primary" onclick="navigateTo('nossos-projetos')">Conheça mais
+                        projetos</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- POR QUE SIOUX -->
+        <section class="section">
+            <div class="container">
+                <div class="section-intro">
+                    <h2>Porque a Sioux</h2>
+                    <p>Diferenciais que entregamos em tudo o que fazemos.</p>
+                </div>
+                <div class="differentials">
+                    <div class="differential-row">
+                        <div class="differential-title"><span>01</span>Criatividade</div>
+                        <p>Aplicamos o pensamento criativo para questionar padrões e desenvolver propostas que evoluam a
+                            experiência e o engajamento das pessoas.</p>
+                    </div>
+                    <div class="differential-row">
+                        <div class="differential-title"><span>02</span>Design Estratégico</div>
+                        <p>Usamos para investigar, validar ideias e desenhar a estratégia para novos produtos e
+                            iniciativas, garantindo que estejam sempre alinhados ao negócio e experiência do público.
+                        </p>
+                    </div>
+                    <div class="differential-row">
+                        <div class="differential-title"><span>03</span>Inovação</div>
+                        <p>Buscamos ativamente a inovação que gera valor, aplicando inteligência artificial e
+                            tecnologias de ponta para construir soluções mais eficientes e preparadas para o futuro.</p>
+                    </div>
+                    <div class="differential-row">
+                        <div class="differential-title"><span>04</span>Inteligência de Dados</div>
+                        <p>Transformamos informação em inteligência acionável para reduzir riscos, otimizar
+                            investimentos e maximizar os resultados.</p>
+                    </div>
+                    <div class="differential-row">
+                        <div class="differential-title"><span>05</span>Segurança</div>
+                        <p>Nossas entregas são projetadas desde o início com as melhores práticas para prevenção de
+                            ameaças e proteção de dados, garantindo a integridade e a segurança da sua operação digital.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="client-carousel">
+                    <h3 style="text-align: center; margin-bottom: var(--space-xl);">Clientes que crescem com a Sioux
+                    </h3>
+                    <p style="text-align: center; margin: 0 auto var(--space-3xl); max-width: 760px;"> Jornadas
+                        personalizadas que geram eficiência operacional e crescimento com consistência.</p>
+                    <div class="carousel-shell" aria-label="Carrossel de logos de clientes">
+                        <div class="carousel-track" data-carousel="clients">
+                            <div class="carousel-item">
+                                <div class="carousel-logo">Tegra</div>
+                                <p>Comunicação e tecnologia integradas para acelerar lançamentos imobiliários.</p>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="carousel-logo">Grupo Vitra</div>
+                                <p>Plataforma digital com foco em performance e governança de dados.</p>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="carousel-logo">Orion Health</div>
+                                <p>Modernização de sistemas críticos com segurança e experiência conectada.</p>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="carousel-logo">Nexa</div>
+                                <p>Jornada de marca e performance para gerar previsibilidade no funil.</p>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="carousel-logo">Aurora</div>
+                                <p>Automação aplicada para escalar campanhas e otimizar conversão.</p>
+                            </div>
+                            <div class="carousel-item" aria-hidden="true">
+                                <div class="carousel-logo">Tegra</div>
+                                <p>Comunicação e tecnologia integradas para acelerar lançamentos imobiliários.</p>
+                            </div>
+                            <div class="carousel-item" aria-hidden="true">
+                                <div class="carousel-logo">Grupo Vitra</div>
+                                <p>Plataforma digital com foco em performance e governança de dados.</p>
+                            </div>
+                            <div class="carousel-item" aria-hidden="true">
+                                <div class="carousel-logo">Orion Health</div>
+                                <p>Modernização de sistemas críticos com segurança e experiência conectada.</p>
+                            </div>
+                            <div class="carousel-item" aria-hidden="true">
+                                <div class="carousel-logo">Nexa</div>
+                                <p>Jornada de marca e performance para gerar previsibilidade no funil.</p>
+                            </div>
+                            <div class="carousel-item" aria-hidden="true">
+                                <div class="carousel-logo">Aurora</div>
+                                <p>Automação aplicada para escalar campanhas e otimizar conversão.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INSIGHTS -->
+        <!-- <section class="section" style="background-color: var(--color-surface-elevated);">
+            <div class="container">
+                <div class="section-intro">
+                    <h2>Insights para apoiar suas decisões</h2>
+                    <p>Artigos, relatórios e talks sobre comunicação, produto e tecnologia.</p>
+                </div>
+                <div class="grid grid-3">
+                    <div class="card">
+                        <span class="tag">Comunicação</span>
+                        <h4>Estratégia de marca para fintechs em 2026</h4>
+                        <p>Como se posicionar em mercado cada vez mais competitivo e commoditizado.</p>
+                        <a href="#" class="btn btn-ghost" onclick="navigateTo('insight-1'); return false;">Ler conteúdo
+                            →</a>
+                    </div>
+                    <div class="card">
+                        <span class="tag">Produto</span>
+                        <h4>Métricas que importam em SaaS</h4>
+                        <p>Framework de KPIs para validar adoção, retenção e crescimento.</p>
+                        <a href="#" class="btn btn-ghost" onclick="navigateTo('insight-2'); return false;">Ler conteúdo
+                            →</a>
+                    </div>
+                    <div class="card">
+                        <span class="tag">Tecnologia</span>
+                        <h4>Arquitetura serverless em produção</h4>
+                        <p>Casos reais, lições aprendidas e boas práticas para escala.</p>
+                        <a href="#" class="btn btn-ghost" onclick="navigateTo('insight-3'); return false;">Ler conteúdo
+                            →</a>
+                    </div>
+                </div>
+                <div class="insights-newsletter">
+                    <div>
+                        <h3>Receba nossos insights</h3>
+                        <p>Uma curadoria mensal com tendências, dados e conteúdos práticos sobre comunicação,
+                            experiência e
+                            tecnologia.</p>
+                    </div>
+                    <form class="newsletter-form" aria-label="Assinatura de newsletter">
+                        <label class="sr-only" for="newsletter-email">Seu email</label>
+                        <input type="email" id="newsletter-email" name="email" placeholder="Seu melhor email" required>
+                        <button class="btn btn-primary" type="submit">Assinar newsletter</button>
+                    </form>
+                </div>
+            </div>
+        </section> -->
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         O QUE FAZEMOS
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <div id="page-o-que-fazemos" class="page">
+        <div class="container" style="padding-top: var(--space-3xl);">
+            <div class="breadcrumb">
+                <a href="#" onclick="navigateTo('home'); return false;">Home</a>
+                <span>›</span>
+                <span>O que fazemos</span>
+            </div>
+
+            <h3
+                style="font-weight: var(--font-weight-regular) var(--color-text-secondary); line-height: 2.5rem; padding-top: 40px; padding-bottom: 80px;">
+                Conectamos Comunicação e Performance, Produto e Experiência, Tecnologia e Escala, sempre potencializadas
+                por IA, dados e automação, para gerar resultados mensuráveis, acelerar entregas e construir soluções
+                robustas e seguras.</h3>
+
+            <nav class="pillar-nav" aria-label="Navegação por pilares">
+                <a href="#pillar-comunicacao">Comunicação e Performance</a>
+                <a href="#pillar-produto">Produto e Experiência</a>
+                <a href="#pillar-tecnologia">Tecnologia e Escala</a>
+                <a href="#pillar-ia">IA, Dados e Automação</a>
+            </nav>
+
+            <div class="section" style="padding: 0;">
+                <div class="service-grid">
+                    <div class="card service-card" id="pillar-comunicacao">
+                        <div class="service-main">
+                            <h4>Comunicação e Performance</h4>
+                            <p class="service-desc">Planejamos, criamos e otimizamos comunicação orientada a resultado,
+                                conectando marca, canais e mídia com visão de funil e performance.</p>
+                            <a href="#" class="service-cta"
+                                onclick="navigateTo('comunicacao-e-performance'); return false;">Vamos conversar sobre
+                                sua
+                                necessidade →</a>
+                        </div>
+                        <div class="service-competencies">
+                            <ul class="competency-list">
+                                <li>
+                                    <span class="competency-title">Estratégia de comunicação</span>
+                                    <span class="competency-desc">Posicionamento, mensagens-chave e prioridades de
+                                        canal.</span>
+                                </li>
+                                <li>
+                                    <span class="competency-title">Conteúdo</span>
+                                    <span class="competency-desc">Narrativas e peças que educam, engajam e
+                                        convertem.</span>
+                                </li>
+                                <li>
+                                    <span class="competency-title">Campanhas</span>
+                                    <span class="competency-desc">Planejamento e execução integrada por objetivo.</span>
+                                </li>
+                                <li>
+                                    <span class="competency-title">Redes sociais</span>
+                                    <span class="competency-desc">Gestão editorial e performance por audiência.</span>
+                                </li>
+                                <li>
+                                    <span class="competency-title">Marketing de influência</span>
+                                    <span class="competency-desc">Parcerias com creators alinhadas à marca.</span>
+                                </li>
+                                <li>
+                                    <span class="competency-title">Mídia de performance</span>
+                                    <span class="competency-desc">Aquisição e otimização contínua por ROI.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card service-card" id="pillar-produto">
+                        <div class="service-main">
+                            <h4>Produto e Experiência</h4>
+                            <p class="service-desc">Desenhamos experiências digitais que resolvem problemas reais, com
+                                pesquisa, prototipação e design orientado à adoção e à evolução do produto.</p>
+                            <a href="#" class="service-cta"
+                                onclick="navigateTo('produto-e-experiencia'); return false;">Vamos conversar sobre sua
+                                necessidade →</a>
+                        </div>
+                        <div class="service-competencies">
+                            <ul class="competency-list">
+                                <li>
+                                    <span class="competency-title">Design thinking</span>
+                                    <span class="competency-desc">Descoberta de problemas e definição de
+                                        oportunidades.</span>
+                                </li>
+                                <li>
+                                    <span class="competency-title">Pesquisa</span>
+                                    <span class="competency-desc">Insights qualitativos e quantitativos para
+                                        decisões.</span>
+                                </li>
+                                <li>
+                                    <span class="competency-title">Design de experiência</span>
+                                    <span class="competency-desc">Mapeamento de jornadas e fluxos claros.</span>
+                                </li>
+                                <li>
+                                    <span class="competency-title">Design de interface</span>
+                                    <span class="competency-desc">UI consistente, acessível e escalável.</span>
+                                </li>
+                                <li>
+                                    <span class="competency-title">UX writing</span>
+                                    <span class="competency-desc">Microcopy que reduz fricção e aumenta clareza.</span>
+                                </li>
+                                <li>
+                                    <span class="competency-title">Design system</span>
+                                    <span class="competency-desc">Componentes e padrões para acelerar squads.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card service-card" id="pillar-tecnologia">
+                        <div class="service-main">
+                            <h4>Tecnologia e Escala</h4>
+                            <p>Construímos e modernizamos sistemas, plataformas e integrações com arquitetura escalável,
+                                segurança e governança técnica.</p>
+                            <a href="#" class="service-cta"
+                                onclick="navigateTo('tecnologia-e-escala'); return false;">Vamos conversar sobre sua
+                                necessidade →</a>
+                        </div>
+                        <div class="service-competencies">
+                            <ul class="competency-list">
+                                <li>
+                                    <span class="competency-title">Arquitetura e integrações</span>
+                                    <span class="competency-desc">Soluções modulares e conectadas a legados.</span>
+                                </li>
+                                <li>
+                                    <span class="competency-title">Plataformas e aplicações</span>
+                                    <span class="competency-desc">Desenvolvimento full-stack com foco em produto.</span>
+                                </li>
+                                <li>
+                                    <span class="competency-title">Cloud e DevOps</span>
+                                    <span class="competency-desc">Infra, deploy e observabilidade automatizados.</span>
+                                </li>
+                                <li>
+                                    <span class="competency-title">Qualidade e testes</span>
+                                    <span class="competency-desc">QA contínuo e cobertura crítica.</span>
+                                </li>
+                                <li>
+                                    <span class="competency-title">Segurança e compliance</span>
+                                    <span class="competency-desc">Proteção, LGPD e governança.</span>
+                                </li>
+                                <li>
+                                    <span class="competency-title">Escalabilidade e performance</span>
+                                    <span class="competency-desc">Resiliência para picos e crescimento.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card service-card" id="pillar-ia">
+                        <div class="service-main">
+                            <h4>IA, Dados e Automação</h4>
+                            <p>Aplicamos IA, dados e automação para acelerar entregas, ganhar eficiência e aumentar a
+                                personalização, com controle e segurança.</p>
+                            <a href="#" class="service-cta"
+                                onclick="navigateTo('ia-dados-automacao'); return false;">Vamos conversar sobre sua
+                                necessidade →</a>
+                        </div>
+                        <div class="service-competencies">
+                            <ul class="competency-list">
+                                <li>
+                                    <span class="competency-title">Estratégia de dados</span>
+                                    <span class="competency-desc">Modelo, métricas e governança orientados ao
+                                        negócio.</span>
+                                </li>
+                                <li>
+                                    <span class="competency-title">IA e machine learning</span>
+                                    <span class="competency-desc">Modelos preditivos com casos de uso claros.</span>
+                                </li>
+                                <li>
+                                    <span class="competency-title">LLMs e IA generativa</span>
+                                    <span class="competency-desc">Assistentes e copilots seguros.</span>
+                                </li>
+                                <li>
+                                    <span class="competency-title">Automação de processos</span>
+                                    <span class="competency-desc">Fluxos inteligentes para reduzir tempo e custo.</span>
+                                </li>
+                                <li>
+                                    <span class="competency-title">MLOps e governança</span>
+                                    <span class="competency-desc">Ciclo de vida, monitoramento e ética.</span>
+                                </li>
+                                <li>
+                                    <span class="competency-title">Personalização em escala</span>
+                                    <span class="competency-desc">Experiências adaptadas por segmento e contexto.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="featured-carousel">
+                <h3 style="margin-bottom: var(--space-lg);">Projetos em destaque</h3>
+                <div class="featured-track">
+                    <div class="card featured-card">
+                        <span class="tag tag-primary">Comunicação + Tecnologia</span>
+                        <h5>Reposicionamento de marca fintech</h5>
+                        <p>Estratégia de comunicação digital integrada com novo website de alta performance.</p>
+                        <p style="font-weight: bold; color: var(--color-brand-primary);">+35% conversão em canal digital
+                        </p>
+                    </div>
+                    <div class="card featured-card">
+                        <span class="tag tag-primary">Produto + Experiência</span>
+                        <h5>Plataforma de e-learning empresarial</h5>
+                        <p>Redesign e operação de plataforma de treinamento corporativo com 50k+ usuários.</p>
+                        <p style="font-weight: bold; color: var(--color-brand-primary);">+42% engajamento</p>
+                    </div>
+                    <div class="card featured-card">
+                        <span class="tag tag-primary">Tecnologia + Dados</span>
+                        <h5>Dashboard analytics em tempo real</h5>
+                        <p>Plataforma de BI integrada com múltiplas fontes de dados e automações.</p>
+                        <p style="font-weight: bold; color: var(--color-brand-primary);">60% redução em tempo de análise
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         PILARES (Comunicação e Performance)
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <div id="page-comunicacao-e-performance" class="page">
+        <div class="container" style="padding-top: var(--space-3xl);">
+            <div class="breadcrumb">
+                <a href="#" onclick="navigateTo('home'); return false;">Home</a>
+                <span>›</span>
+                <a href="#" onclick="navigateTo('o-que-fazemos'); return false;">O que fazemos</a>
+                <span>›</span>
+                <span>Comunicação e Performance</span>
+            </div>
+            <h1>Comunicação e Performance para crescer com previsibilidade</h1>
+            <p
+                style="font-size: var(--font-size-body-lg); margin-bottom: var(--space-3xl); color: var(--color-text-secondary);">
+                Planejamos e executamos comunicação de marca e performance conectada aos objetivos de negócio,
+                combinando posicionamento, conteúdo e mídia com otimização contínua.</p>
+
+            <h3 style="margin-top: var(--space-3xl); margin-bottom: var(--space-lg);">Para quem é</h3>
+            <p style="margin-bottom: var(--space-3xl); color: var(--color-text-secondary);">Para empresas que precisam
+                fortalecer a marca, gerar demanda qualificada e transformar investimento em marketing em resultado
+                mensurável, sem perder consistência nem visão de longo prazo.</p>
+
+            <h3 style="margin-bottom: var(--space-lg);">O que fazemos aqui</h3>
+            <ul
+                style="margin-bottom: var(--space-3xl); color: var(--color-text-secondary); padding-left: var(--space-xl);">
+                <li style="margin-bottom: var(--space-md);">Definimos posicionamento e narrativa que conectam marca aos
+                    objetivos de negócio.</li>
+                <li style="margin-bottom: var(--space-md);">Producimos conteúdo consistent, contextualizado e orientado
+                    a conversão em cada canal.</li>
+                <li style="margin-bottom: var(--space-md);">Operamos mídia e performance com métricas claras e
+                    otimização contínua de resultado.</li>
+            </ul>
+
+            <h3 style="margin-bottom: var(--space-lg);">Principais serviços</h3>
+            <div class="grid grid-2" style="margin-bottom: var(--space-3xl);">
+                <div
+                    style="padding: var(--space-lg); background: var(--color-surface-muted); border-radius: var(--radius-md);">
+                    <h4 style="margin-top: 0;">Posicionamento e narrativa</h4>
+                    <p>Definição clara e diferenciada da marca no mercado.</p>
+                </div>
+                <div
+                    style="padding: var(--space-lg); background: var(--color-surface-muted); border-radius: var(--radius-md);">
+                    <h4 style="margin-top: 0;">Conteúdo e stories</h4>
+                    <p>Produção consistente de conteúdo para educação e conversão.</p>
+                </div>
+                <div
+                    style="padding: var(--space-lg); background: var(--color-surface-muted); border-radius: var(--radius-md);">
+                    <h4 style="margin-top: 0;">Mídia e performance</h4>
+                    <p>Planejamento e execução de campanhas com ROI mensurável.</p>
+                </div>
+                <div
+                    style="padding: var(--space-lg); background: var(--color-surface-muted); border-radius: var(--radius-md);">
+                    <h4 style="margin-top: 0;">Campanhas integradas</h4>
+                    <p>Ativações que conectam marca, performance e experiência.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--space-4xl);">
+                <button class="btn btn-primary" onclick="navigateTo('contato')">Falar com a Sioux</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         PILARES (Produto e Experiência)
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <div id="page-produto-e-experiencia" class="page">
+        <div class="container" style="padding-top: var(--space-3xl);">
+            <div class="breadcrumb">
+                <a href="#" onclick="navigateTo('home'); return false;">Home</a>
+                <span>›</span>
+                <a href="#" onclick="navigateTo('o-que-fazemos'); return false;">O que fazemos</a>
+                <span>›</span>
+                <span>Produto e Experiência</span>
+            </div>
+            <h1>Produtos digitais que geram adoção e resultado</h1>
+            <p
+                style="font-size: var(--font-size-body-lg); margin-bottom: var(--space-3xl); color: var(--color-text-secondary);">
+                Desenhamos e evoluímos produtos digitais que as pessoas querem usar, com jornadas claras, usabilidade
+                sólida e foco em adoção.</p>
+
+            <h3 style="margin-bottom: var(--space-lg);">Para quem é</h3>
+            <p style="margin-bottom: var(--space-3xl); color: var(--color-text-secondary);">Para startups e empresas que
+                precisam validar, desenhar ou evoluir produtos digitais com evidência de usuário e visão clara de
+                roadmap.</p>
+
+            <h3 style="margin-bottom: var(--space-lg);">O que fazemos aqui</h3>
+            <ul
+                style="margin-bottom: var(--space-3xl); color: var(--color-text-secondary); padding-left: var(--space-xl);">
+                <li style="margin-bottom: var(--space-md);">Pesquisamos usuários para validar problemas reais e
+                    oportunidades de produto.</li>
+                <li style="margin-bottom: var(--space-md);">Desenhamos jornadas, interfaces e interações com foco em
+                    usabilidade e adoção.</li>
+                <li style="margin-bottom: var(--space-md);">Evoluímos produtos em operação com dados de uso e feedback
+                    contínuo.</li>
+            </ul>
+
+            <h3 style="margin-bottom: var(--space-lg);">Principais serviços</h3>
+            <div class="grid grid-2" style="margin-bottom: var(--space-3xl);">
+                <div
+                    style="padding: var(--space-lg); background: var(--color-surface-muted); border-radius: var(--radius-md);">
+                    <h4 style="margin-top: 0;">Pesquisa e validação</h4>
+                    <p>Entender usuários, validar oportunidades, orientar roadmap.</p>
+                </div>
+                <div
+                    style="padding: var(--space-lg); background: var(--color-surface-muted); border-radius: var(--radius-md);">
+                    <h4 style="margin-top: 0;">Design e prototipagem</h4>
+                    <p>Jornadas, wireframes, interfaces de alta fidelidade e testes.</p>
+                </div>
+                <div
+                    style="padding: var(--space-lg); background: var(--color-surface-muted); border-radius: var(--radius-md);">
+                    <h4 style="margin-top: 0;">Design systems</h4>
+                    <p>Bibliotecas de componentes para escalar produção de design e desenvolvimento.</p>
+                </div>
+                <div
+                    style="padding: var(--space-lg); background: var(--color-surface-muted); border-radius: var(--radius-md);">
+                    <h4 style="margin-top: 0;">Evolução contínua</h4>
+                    <p>Monitoramento, testes A/B e otimização orientada a dados de uso.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--space-4xl);">
+                <button class="btn btn-primary" onclick="navigateTo('contato')">Falar com a Sioux</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         PILARES (Tecnologia e Escala)
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <div id="page-tecnologia-e-escala" class="page">
+        <div class="container" style="padding-top: var(--space-3xl);">
+            <div class="breadcrumb">
+                <a href="#" onclick="navigateTo('home'); return false;">Home</a>
+                <span>›</span>
+                <a href="#" onclick="navigateTo('o-que-fazemos'); return false;">O que fazemos</a>
+                <span>›</span>
+                <span>Tecnologia e Escala</span>
+            </div>
+            <h1>Tecnologia, segurança e escala para o seu digital</h1>
+            <p
+                style="font-size: var(--font-size-body-lg); margin-bottom: var(--space-3xl); color: var(--color-text-secondary);">
+                Construímos e modernizamos sistemas, plataformas e integrações com arquitetura escalável, segurança e
+                governança técnica.</p>
+
+            <h3 style="margin-bottom: var(--space-lg);">Para quem é</h3>
+            <p style="margin-bottom: var(--space-3xl); color: var(--color-text-secondary);">Para empresas que precisam
+                construir, modernizar ou escalar infraestrutura digital com segurança, performance e visão de longo
+                prazo.</p>
+
+            <h3 style="margin-bottom: var(--space-lg);">O que fazemos aqui</h3>
+            <ul
+                style="margin-bottom: var(--space-3xl); color: var(--color-text-secondary); padding-left: var(--space-xl);">
+                <li style="margin-bottom: var(--space-md);">Arquitetamos soluções escaláveis, seguras e preparadas para
+                    crescimento.</li>
+                <li style="margin-bottom: var(--space-md);">Modernizamos sistemas legados com zero downtime e risco
+                    minimizado.</li>
+                <li style="margin-bottom: var(--space-md);">Operamos e evoluímos plataformas com governança,
+                    monitoramento e SLA claros.</li>
+            </ul>
+
+            <h3 style="margin-bottom: var(--space-lg);">Principais serviços</h3>
+            <div class="grid grid-2" style="margin-bottom: var(--space-3xl);">
+                <div
+                    style="padding: var(--space-lg); background: var(--color-surface-muted); border-radius: var(--radius-md);">
+                    <h4 style="margin-top: 0;">Desenvolvimento fullstack</h4>
+                    <p>Frontend, backend e infraestrutura com padrões de alta qualidade.</p>
+                </div>
+                <div
+                    style="padding: var(--space-lg); background: var(--color-surface-muted); border-radius: var(--radius-md);">
+                    <h4 style="margin-top: 0;">Arquitetura e escala</h4>
+                    <p>Desenho de sistemas preparados para crescimento, performance e resiliência.</p>
+                </div>
+                <div
+                    style="padding: var(--space-lg); background: var(--color-surface-muted); border-radius: var(--radius-md);">
+                    <h4 style="margin-top: 0;">Modernização</h4>
+                    <p>Migração de legado para arquiteturas cloud-native e modernas.</p>
+                </div>
+                <div
+                    style="padding: var(--space-lg); background: var(--color-surface-muted); border-radius: var(--radius-md);">
+                    <h4 style="margin-top: 0;">Integrações e APIs</h4>
+                    <p>Conexão entre sistemas com padrões robustos e documentação clara.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--space-4xl);">
+                <button class="btn btn-primary" onclick="navigateTo('contato')">Falar com a Sioux</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         PILARES (IA, Dados e Automação)
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <div id="page-ia-dados-automacao" class="page">
+        <div class="container" style="padding-top: var(--space-3xl);">
+            <div class="breadcrumb">
+                <a href="#" onclick="navigateTo('home'); return false;">Home</a>
+                <span>›</span>
+                <a href="#" onclick="navigateTo('o-que-fazemos'); return false;">O que fazemos</a>
+                <span>›</span>
+                <span>IA, Dados e Automação</span>
+            </div>
+            <h1>IA, dados e automação a serviço do resultado</h1>
+            <p
+                style="font-size: var(--font-size-body-lg); margin-bottom: var(--space-3xl); color: var(--color-text-secondary);">
+                Aplicamos IA, dados e automação para acelerar entregas, ganhar eficiência e aumentar a personalização,
+                com controle e segurança.</p>
+
+            <h3 style="margin-bottom: var(--space-lg);">Para quem é</h3>
+            <p style="margin-bottom: var(--space-3xl); color: var(--color-text-secondary);">Para empresas que querem
+                aplicar IA e automação para ganhar eficiência operacional, personalização em escala e insights mais
+                profundos dos seus dados.</p>
+
+            <h3 style="margin-bottom: var(--space-lg);">O que fazemos aqui</h3>
+            <ul
+                style="margin-bottom: var(--space-3xl); color: var(--color-text-secondary); padding-left: var(--space-xl);">
+                <li style="margin-bottom: var(--space-md);">Identificamos oportunidades reais de IA e automação
+                    alinhadas ao seu negócio.</li>
+                <li style="margin-bottom: var(--space-md);">Implementamos pipelines de dados, modelos e workflows com
+                    rigor e segurança.</li>
+                <li style="margin-bottom: var(--space-md);">Operamos soluções com monitoramento, iteração e evolução
+                    contínua.</li>
+            </ul>
+
+            <h3 style="margin-bottom: var(--space-lg);">Principais serviços</h3>
+            <div class="grid grid-2" style="margin-bottom: var(--space-3xl);">
+                <div
+                    style="padding: var(--space-lg); background: var(--color-surface-muted); border-radius: var(--radius-md);">
+                    <h4 style="margin-top: 0;">Data & Analytics</h4>
+                    <p>Pipelines, warehouses e dashboards para decisões orientadas a dados.</p>
+                </div>
+                <div
+                    style="padding: var(--space-lg); background: var(--color-surface-muted); border-radius: var(--radius-md);">
+                    <h4 style="margin-top: 0;">IA e Machine Learning</h4>
+                    <p>Modelos de previsão, recomendação e automação inteligente.</p>
+                </div>
+                <div
+                    style="padding: var(--space-lg); background: var(--color-surface-muted); border-radius: var(--radius-md);">
+                    <h4 style="margin-top: 0;">Automação de processos</h4>
+                    <p>RPA e workflows inteligentes para ganhar eficiência operacional.</p>
+                </div>
+                <div
+                    style="padding: var(--space-lg); background: var(--color-surface-muted); border-radius: var(--radius-md);">
+                    <h4 style="margin-top: 0;">LLMs e IA generativa</h4>
+                    <p>Aplicações de LLMs com prompt engineering, RAG e fine-tuning.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--space-4xl);">
+                <button class="btn btn-primary" onclick="navigateTo('contato')">Falar com a Sioux</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         NOSSOS PROJETOS
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <div id="page-nossos-projetos" class="page">
+        <div class="container" style="padding-top: var(--space-3xl);">
+            <div class="breadcrumb">
+                <a href="#" onclick="navigateTo('home'); return false;">Home</a>
+                <span>›</span>
+                <span>Nossos Projetos</span>
+            </div>
+            <h1>Nossos projetos</h1>
+            <p
+                style="font-size: var(--font-size-body-lg); margin-bottom: var(--space-2xl); color: var(--color-text-secondary);">
+                Aqui você encontra exemplos de como conectamos comunicação, experiência e tecnologia para resolver
+                problemas reais de negócio, com resultado mensurável.</p>
+
+            <p style="margin-bottom: var(--space-lg); color: var(--color-text-secondary);">Filtre por tipo de projeto e
+                setor para encontrar histórias mais próximas da sua realidade.</p>
+
+            <div class="filter-bar">
+                <button class="filter-btn active" onclick="filterProjects('todos')">Todos</button>
+                <button class="filter-btn" onclick="filterProjects('comunicacao')">Comunicação</button>
+                <button class="filter-btn" onclick="filterProjects('produto')">Produto</button>
+                <button class="filter-btn" onclick="filterProjects('tecnologia')">Tecnologia</button>
+            </div>
+
+            <div class="grid grid-3" id="projects-grid">
+                <div class="card project-card" data-category="comunicacao">
+                    <span class="tag tag-primary">Comunicação + Tecnologia</span>
+                    <h4>Reposicionamento de marca fintech</h4>
+                    <p>Estratégia de comunicação digital integrada com novo website de alta performance.</p>
+                    <p style="font-weight: bold; color: var(--color-brand-primary);">+35% conversão em canal digital</p>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="navigateTo('projeto-1')">Ver
+                        projeto</button>
+                </div>
+
+                <div class="card project-card" data-category="produto">
+                    <span class="tag tag-primary">Produto + Experiência</span>
+                    <h4>Plataforma de e-learning empresarial</h4>
+                    <p>Redesign e operação de plataforma de treinamento corporativo com 50k+ usuários.</p>
+                    <p style="font-weight: bold; color: var(--color-brand-primary);">+42% engajamento</p>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="navigateTo('projeto-2')">Ver
+                        projeto</button>
+                </div>
+
+                <div class="card project-card" data-category="tecnologia">
+                    <span class="tag tag-primary">Tecnologia + Dados</span>
+                    <h4>Dashboard analytics em tempo real</h4>
+                    <p>Plataforma de BI integrada com múltiplas fontes de dados e automações.</p>
+                    <p style="font-weight: bold; color: var(--color-brand-primary);">60% redução em tempo de análise</p>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="navigateTo('projeto-3')">Ver
+                        projeto</button>
+                </div>
+
+                <div class="card project-card" data-category="comunicacao">
+                    <span class="tag tag-primary">Comunicação</span>
+                    <h4>Campanha integrada B2B2C</h4>
+                    <p>Estratégia e execução de campanha que impactou tanto demanda B2B quanto adoção B2C.</p>
+                    <p style="font-weight: bold; color: var(--color-brand-primary);">+65% em leads qualificados</p>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="navigateTo('projeto-4')">Ver
+                        projeto</button>
+                </div>
+
+                <div class="card project-card" data-category="produto">
+                    <span class="tag tag-primary">Produto</span>
+                    <h4>MVP para marketplace de serviços</h4>
+                    <p>Design e desenvolvimento de MVP validado com usuários reais em 8 semanas.</p>
+                    <p style="font-weight: bold; color: var(--color-brand-primary);">1000+ transações no mês 1</p>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="navigateTo('projeto-5')">Ver
+                        projeto</button>
+                </div>
+
+                <div class="card project-card" data-category="tecnologia">
+                    <span class="tag tag-primary">Tecnologia</span>
+                    <h4>Modernização de plataforma legada</h4>
+                    <p>Migração de monolito para arquitetura microserviços com zero downtime.</p>
+                    <p style="font-weight: bold; color: var(--color-brand-primary);">50% redução em tempo de deploy</p>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="navigateTo('projeto-6')">Ver
+                        projeto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROJETO DETALHADO 1 -->
+    <div id="page-projeto-1" class="page">
+        <div class="container" style="padding-top: var(--space-3xl);">
+            <div class="breadcrumb">
+                <a href="#" onclick="navigateTo('home'); return false;">Home</a>
+                <span>›</span>
+                <a href="#" onclick="navigateTo('nossos-projetos'); return false;">Nossos Projetos</a>
+                <span>›</span>
+                <span>Reposicionamento de marca fintech</span>
+            </div>
+            <h1>Reposicionamento de marca fintech</h1>
+            <span class="tag tag-primary">Comunicação + Tecnologia</span>
+
+            <h3 style="margin-top: var(--space-3xl); margin-bottom: var(--space-lg);">Contexto</h3>
+            <p style="color: var(--color-text-secondary); margin-bottom: var(--space-2xl);">Fintech com 3 anos de
+                mercado, validada por usuários mas com marca pouco diferenciada e website desatualizado.</p>
+
+            <h3 style="margin-bottom: var(--space-lg);">Desafio</h3>
+            <p style="color: var(--color-text-secondary); margin-bottom: var(--space-2xl);">Reposicionar marca de forma
+                mais madura e consultiva, sem perder tração com usuários atuais. Redesenhar website para gerar demanda
+                qualificada em novos segmentos (empresas de médio porte).</p>
+
+            <h3 style="margin-bottom: var(--space-lg);">O que fizemos</h3>
+            <ul
+                style="color: var(--color-text-secondary); padding-left: var(--space-xl); margin-bottom: var(--space-2xl);">
+                <li style="margin-bottom: var(--space-md);">Pesquisa qualitativa com usuários, clientes prospects e
+                    concorrentes.</li>
+                <li style="margin-bottom: var(--space-md);">Redefinição de posicionamento, narrativa e identidade
+                    visual.</li>
+                <li style="margin-bottom: var(--space-md);">Redesign de website com novo CMS, SEO e performance
+                    otimizados.</li>
+                <li style="margin-bottom: var(--space-md);">Planejamento e execução de campanha de lançamento integrada.
+                </li>
+            </ul>
+
+            <h3 style="margin-bottom: var(--space-lg);">Resultados</h3>
+            <p
+                style="color: var(--color-brand-primary); font-size: var(--font-size-h3); margin-bottom: var(--space-md);">
+                +35% conversão em canal digital</p>
+            <p style="color: var(--color-text-secondary); margin-bottom: var(--space-md);">+120% em leads qualificados
+                B2B ao final de 6 meses.</p>
+            <p style="color: var(--color-text-secondary); margin-bottom: var(--space-md);">Retenção de usuários B2C
+                mantida, sem churn.</p>
+
+            <h3 style="margin-bottom: var(--space-lg);">Tecnologias</h3>
+            <p style="color: var(--color-text-secondary);">Next.js, Contentful CMS, Vercel, Segment analytics, Google
+                Ads e Meta.</p>
+
+            <div style="text-align: center; margin-top: var(--space-4xl);">
+                <button class="btn btn-primary" onclick="navigateTo('contato')">Falar sobre um projeto assim</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         INSIGHTS
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <div id="page-insights" class="page">
+        <div class="container" style="padding-top: var(--space-3xl);">
+            <div class="breadcrumb">
+                <a href="#" onclick="navigateTo('home'); return false;">Home</a>
+                <span>›</span>
+                <span>Insights</span>
+            </div>
+            <h1>Insights</h1>
+            <p
+                style="font-size: var(--font-size-body-lg); margin-bottom: var(--space-2xl); color: var(--color-text-secondary);">
+                Conteúdos para apoiar suas decisões em comunicação, produto e tecnologia, sempre com foco em resultado e
+                evolução contínua.</p>
+
+            <div class="filter-bar">
+                <button class="filter-btn active" onclick="filterInsights('todos')">Todos</button>
+                <button class="filter-btn" onclick="filterInsights('comunicacao')">Comunicação</button>
+                <button class="filter-btn" onclick="filterInsights('produto')">Produto</button>
+                <button class="filter-btn" onclick="filterInsights('tecnologia')">Tecnologia</button>
+            </div>
+
+            <div class="grid grid-3" id="insights-grid">
+                <div class="card insight-card" data-category="comunicacao">
+                    <span class="tag">Comunicação</span>
+                    <h4>Estratégia de marca para fintechs em 2026</h4>
+                    <p>Como se posicionar em mercado cada vez mais competitivo e commoditizado.</p>
+                    <p
+                        style="font-size: var(--font-size-body-sm); color: var(--color-text-tertiary); margin-top: var(--space-md);">
+                        5 min de leitura</p>
+                    <button class="btn btn-ghost" style="padding: 0;" onclick="navigateTo('insight-1')">Ler conteúdo
+                        →</button>
+                </div>
+
+                <div class="card insight-card" data-category="produto">
+                    <span class="tag">Produto</span>
+                    <h4>Métricas que importam em SaaS</h4>
+                    <p>Framework de KPIs para validar adoção, retenção e crescimento.</p>
+                    <p
+                        style="font-size: var(--font-size-body-sm); color: var(--color-text-tertiary); margin-top: var(--space-md);">
+                        8 min de leitura</p>
+                    <button class="btn btn-ghost" style="padding: 0;" onclick="navigateTo('insight-2')">Ler conteúdo
+                        →</button>
+                </div>
+
+                <div class="card insight-card" data-category="tecnologia">
+                    <span class="tag">Tecnologia</span>
+                    <h4>Arquitetura serverless em produção</h4>
+                    <p>Casos reais, lições aprendidas e boas práticas para escala.</p>
+                    <p
+                        style="font-size: var(--font-size-body-sm); color: var(--color-text-tertiary); margin-top: var(--space-md);">
+                        12 min de leitura</p>
+                    <button class="btn btn-ghost" style="padding: 0;" onclick="navigateTo('insight-3')">Ler conteúdo
+                        →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INSIGHT DETALHADO 1 -->
+    <div id="page-insight-1" class="page">
+        <div class="container" style="padding-top: var(--space-3xl); max-width: 700px;">
+            <div class="breadcrumb">
+                <a href="#" onclick="navigateTo('home'); return false;">Home</a>
+                <span>›</span>
+                <a href="#" onclick="navigateTo('insights'); return false;">Insights</a>
+                <span>›</span>
+                <span>Estratégia de marca para fintechs em 2026</span>
+            </div>
+            <span class="tag">Comunicação</span>
+            <h1>Estratégia de marca para fintechs em 2026</h1>
+            <p
+                style="font-size: var(--font-size-body-sm); color: var(--color-text-tertiary); margin-bottom: var(--space-xl);">
+                15 de janeiro de 2026 · 5 min de leitura</p>
+
+            <h3>Contexto do mercado</h3>
+            <p style="color: var(--color-text-secondary); line-height: 1.8;">O mercado fintech brasileiro cresceu
+                exponencialmente nos últimos 5 anos. Hoje, com centenas de players oferecendo soluções similares, a
+                diferenciação por features não é mais suficiente. As marcas que conseguem se posicionar de forma clara e
+                consistente ganham tração, retenção e disposição de pagamento maior dos usuários.</p>
+
+            <h3>Os 3 pilares de uma marca fintech forte</h3>
+            <ul style="padding-left: var(--space-xl); color: var(--color-text-secondary);">
+                <li style="margin-bottom: var(--space-lg);"><strong>Propósito claro:</strong> Não é apenas oferecer mais
+                    um serviço. É resolver um problema real ou habilitar um estilo de vida.</li>
+                <li style="margin-bottom: var(--space-lg);"><strong>Confiabilidade demonstrada:</strong> Segurança,
+                    compliance e transparência não são marketing. São pré-requisitos.</li>
+                <li style="margin-bottom: var(--space-lg);"><strong>Comunidade e pertencimento:</strong> Usuários atuais
+                    são melhores embaixadores que qualquer anúncio pago.</li>
+            </ul>
+
+            <h3>Próximos passos</h3>
+            <p style="color: var(--color-text-secondary); margin-bottom: var(--space-3xl);">Se sua fintech está nessa
+                encruzilhada de growth vs. diferenciação, hora de conversar com uma parceira que entende o mercado e
+                pode ajudar a desenhar uma estratégia de marca e comunicação de verdade.</p>
+
+            <div
+                style="background-color: var(--color-surface-elevated); padding: var(--space-xl); border-radius: var(--radius-md);">
+                <h4>Quer discutir estratégia de marca para sua fintech?</h4>
+                <p style="margin-bottom: var(--space-lg); color: var(--color-text-secondary);">Nossa equipe de
+                    estratégia e comunicação está pronta para conversar.</p>
+                <button class="btn btn-primary" onclick="navigateTo('contato')">Agendar conversa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         SOBRE NÓS
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <div id="page-sobre-nos" class="page">
+        <div class="container" style="padding-top: var(--space-3xl);">
+            <div class="breadcrumb">
+                <a href="#" onclick="navigateTo('home'); return false;">Home</a>
+                <span>›</span>
+                <span>Sobre Nós</span>
+            </div>
+            <h1>Sobre Nós</h1>
+
+            <h3 style="margin-top: var(--space-3xl); margin-bottom: var(--space-lg);">Quem somos</h3>
+            <p
+                style="font-size: var(--font-size-body-lg); margin-bottom: var(--space-3xl); color: var(--color-text-secondary);">
+                A Sioux é uma parceira global de comunicação e tecnologia que há 25 anos constrói jornadas digitais
+                completas, da experiência de marca aos sistemas mais complexos.</p>
+
+            <h3 style="margin-bottom: var(--space-lg);">O que entregamos</h3>
+            <p
+                style="font-size: var(--font-size-body-lg); margin-bottom: var(--space-3xl); color: var(--color-text-secondary);">
+                Conectamos Comunicação e Performance, Produto e Experiência, Tecnologia e Escala para gerar resultados
+                mensuráveis, acelerar entregas e construir soluções robustas e seguras, com operação preparada para a
+                era da IA.</p>
+
+            <h3 style="margin-bottom: var(--space-lg);">Como queremos ser vistos</h3>
+            <p
+                style="font-size: var(--font-size-body-lg); margin-bottom: var(--space-3xl); color: var(--color-text-secondary);">
+                Não somos uma agência de execução nem uma software house por demanda. Somos uma parceira de
+                transformação digital ponta a ponta, que assume responsabilidade pelo resultado.</p>
+
+            <h3 style="margin-bottom: var(--space-lg);">Nossos pilares</h3>
+            <div class="grid grid-1" style="max-width: 800px;">
+                <div style="padding: var(--space-lg); border-left: 4px solid var(--color-brand-primary);">
+                    <h4 style="margin-top: 0;">Jornada Digital Completa</h4>
+                    <p>Visão holística de marca, experiência e tecnologia integradas.</p>
+                </div>
+                <div style="padding: var(--space-lg); border-left: 4px solid var(--color-brand-primary);">
+                    <h4 style="margin-top: 0;">Resultado com Método</h4>
+                    <p>Processos claros, métricas definidas, governança em cada etapa.</p>
+                </div>
+                <div style="padding: var(--space-lg); border-left: 4px solid var(--color-brand-primary);">
+                    <h4 style="margin-top: 0;">Tecnologia, Segurança e Escala</h4>
+                    <p>Arquitetura robusta, preparada para crescimento sem comprometer segurança.</p>
+                </div>
+                <div style="padding: var(--space-lg); border-left: 4px solid var(--color-brand-primary);">
+                    <h4 style="margin-top: 0;">Inovação Aplicada</h4>
+                    <p>IA, dados e automação em serviço do negócio, não apenas pela novidade.</p>
+                </div>
+                <div style="padding: var(--space-lg); border-left: 4px solid var(--color-brand-primary);">
+                    <h4 style="margin-top: 0;">Parceria e Fator Humano</h4>
+                    <p>Sócios próximos, times sêniores, comprometimento real com evolução contínua.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         CARREIRAS
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <div id="page-carreiras" class="page">
+        <div class="container" style="padding-top: var(--space-3xl);">
+            <div class="breadcrumb">
+                <a href="#" onclick="navigateTo('home'); return false;">Home</a>
+                <span>›</span>
+                <span>Carreiras</span>
+            </div>
+            <h1>Carreiras</h1>
+            <p
+                style="font-size: var(--font-size-body-lg); margin-bottom: var(--space-3xl); color: var(--color-text-secondary);">
+                Construímos jornadas digitais completas para nossos clientes e também para quem faz a Sioux no dia a
+                dia.</p>
+
+            <div
+                style="background-color: var(--color-surface-elevated); padding: var(--space-2xl); border-radius: var(--radius-lg); margin-bottom: var(--space-3xl);">
+                <h3>Nossa cultura</h3>
+                <p style="color: var(--color-text-secondary); margin-bottom: var(--space-lg);">Valorizamos profissionais
+                    que combinam excelência técnica, capacidade de colaboração e comprometimento com resultado. Aqui,
+                    você trabalha em projetos desafiadores, ao lado de seniores, com autonomia para evoluir e propor
+                    soluções.</p>
+                <p style="color: var(--color-text-secondary);">Oferecemos salário competitivo, benefícios integrais,
+                    plano de carreira claro e oportunidades de crescimento contínuo.</p>
+            </div>
+
+            <h3 style="margin-bottom: var(--space-lg);">Vagas abertas</h3>
+            <div class="filter-bar">
+                <button class="filter-btn active" onclick="filterJobs('todos')">Todas</button>
+                <button class="filter-btn" onclick="filterJobs('dev')">Desenvolvimento</button>
+                <button class="filter-btn" onclick="filterJobs('design')">Design</button>
+                <button class="filter-btn" onclick="filterJobs('dados')">Dados</button>
+            </div>
+
+            <div class="grid grid-1" id="jobs-grid">
+                <div class="card job-card" data-category="dev">
+                    <h4>Senior Full-Stack Engineer</h4>
+                    <p style="color: var(--color-text-secondary); margin-bottom: var(--space-lg);">Responsável por
+                        arquitetura e desenvolvimento de plataformas escaláveis. Deve ter experiência com
+                        Node.js/TypeScript, React e cloud.</p>
+                    <div style="display: flex; gap: var(--space-lg); margin-bottom: var(--space-lg);">
+                        <span class="tag">Desenvolvimento</span>
+                        <span class="tag">Híbrido</span>
+                        <span class="tag">São Paulo</span>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%;">Candidatar</button>
+                </div>
+
+                <div class="card job-card" data-category="design">
+                    <h4>Product Designer</h4>
+                    <p style="color: var(--color-text-secondary); margin-bottom: var(--space-lg);">Design de produtos
+                        digitais do zero, com pesquisa qualitativa, prototipagem e validação com usuários.</p>
+                    <div style="display: flex; gap: var(--space-lg); margin-bottom: var(--space-lg);">
+                        <span class="tag">Design</span>
+                        <span class="tag">Presencial</span>
+                        <span class="tag">São Paulo</span>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%;">Candidatar</button>
+                </div>
+
+                <div class="card job-card" data-category="dados">
+                    <h4>Data Engineer</h4>
+                    <p style="color: var(--color-text-secondary); margin-bottom: var(--space-lg);">Construção e
+                        manutenção de pipelines, data warehouses e plataformas de analytics em escala.</p>
+                    <div style="display: flex; gap: var(--space-lg); margin-bottom: var(--space-lg);">
+                        <span class="tag">Dados</span>
+                        <span class="tag">Remoto</span>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%;">Candidatar</button>
+                </div>
+            </div>
+
+            <div
+                style="text-align: center; margin-top: var(--space-4xl); background-color: var(--color-surface-elevated); padding: var(--space-2xl); border-radius: var(--radius-lg);">
+                <h4>Não vê uma vaga para você?</h4>
+                <p style="color: var(--color-text-secondary); margin-bottom: var(--space-lg);">Envie seu perfil mesmo
+                    assim. Estamos sempre em busca de talentos.</p>
+                <button class="btn btn-secondary">Enviar seu perfil</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         CONTATO
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <div id="page-contato" class="page">
+        <div class="container" style="padding-top: var(--space-3xl); max-width: 700px;">
+            <div class="breadcrumb">
+                <a href="#" onclick="navigateTo('home'); return false;">Home</a>
+                <span>›</span>
+                <span>Contato</span>
+            </div>
+            <h1>Fale com a Sioux</h1>
+            <p
+                style="font-size: var(--font-size-body-lg); margin-bottom: var(--space-3xl); color: var(--color-text-secondary);">
+                Conte sobre o seu desafio no digital e vamos entender juntos qual é o melhor próximo passo.</p>
+
+            <form id="contact-form">
+                <div id="form-message" class="success-message hidden"></div>
+
+                <div class="form-group">
+                    <label for="contact-reason">Motivo do contato *</label>
+                    <select id="contact-reason" required>
+                        <option value="">Selecione...</option>
+                        <option value="projeto">Projeto</option>
+                        <option value="diagnostico">Diagnóstico</option>
+                        <option value="ia">IA e Automação</option>
+                        <option value="carreiras">Carreiras</option>
+                        <option value="imprensa">Imprensa</option>
+                        <option value="outro">Outro</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="contact-name">Nome *</label>
+                    <input type="text" id="contact-name" required>
+                    <span class="error-message hidden" id="error-name"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="contact-email">E-mail *</label>
+                    <input type="email" id="contact-email" required>
+                    <span class="error-message hidden" id="error-email"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="contact-company">Empresa *</label>
+                    <input type="text" id="contact-company" required>
+                    <span class="error-message hidden" id="error-company"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="contact-role">Cargo *</label>
+                    <input type="text" id="contact-role" required>
+                    <span class="error-message hidden" id="error-role"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="contact-phone">Telefone</label>
+                    <input type="tel" id="contact-phone">
+                </div>
+
+                <div class="form-group">
+                    <label for="contact-message">Mensagem *</label>
+                    <textarea id="contact-message" rows="6" required></textarea>
+                    <span class="error-message hidden" id="error-message"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Enviar</button>
+            </form>
+
+            <div
+                style="margin-top: var(--space-4xl); padding-top: var(--space-3xl); border-top: 1px solid var(--color-border-default);">
+                <h3 style="margin-bottom: var(--space-lg);">Contatos diretos</h3>
+                <ul style="list-style: none; padding: 0; color: var(--color-text-secondary);">
+                    <li style="margin-bottom: var(--space-lg);">
+                        <strong>E-mail:</strong> <br>
+                        <a href="mailto:contato@sioux.com.br">contato@sioux.com.br</a>
+                    </li>
+                    <li style="margin-bottom: var(--space-lg);">
+                        <strong>Telefone:</strong> <br>
+                        <a href="tel:+551133332222">+55 11 3333-2222</a>
+                    </li>
+                    <li style="margin-bottom: var(--space-lg);">
+                        <strong>Endereço:</strong> <br>
+                        Avenida Paulista, 1000, São Paulo, SP
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Brasil</h4>
+                    <p>Av. Nova Independência, 87 - 9º andar<br>Brooklin, São Paulo - SP - 04570-000</p>
+                    <ul>
+                        <li><a href="tel:+551151716940">+55 11 5171-6940</a></li>
+                        <li><a href="https://wa.me/551151716953" target="_blank" rel="noopener">+55 11 5171-6953
+                                (WhatsApp)</a></li>
+                        <li><a href="mailto:contato@sioux.ag">contato@sioux.ag</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Portugal</h4>
+                    <p>Avila Spaces Atrium Saldanha<br>Praça Duque de Saldanha, 1 e 2 andar<br>1050-094 - Saldanha -
+                        Lisboa</p>
+                    <ul>
+                        <li><a href="mailto:contato@sioux.pt">contato@sioux.pt</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Redes Sociais</h4>
+                    <ul>
+                        <li><a href="https://www.linkedin.com/company/sioux1to1/" target="_blank"
+                                rel="noopener">LinkedIn</a></li>
+                        <li><a href="https://www.instagram.com/sioux1to1/" target="_blank" rel="noopener">Instagram</a>
+                        </li>
+                        <li><a href="https://wa.me/551151716953" target="_blank" rel="noopener">WhatsApp</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 Sioux. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════════════════════
+        // NAVEGAÇÃO E ROUTING
+        // ═══════════════════════════════════════════════════════════════════════════════
+
+        function navigateTo(pageId) {
+            // Esconder todas as páginas
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Mostrar página solicitada
+            const page = document.getElementById(`page-${pageId}`);
+            if (page) {
+                page.classList.add('active');
+            }
+
+            // Atualizar nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Scroll ao topo
+            window.scrollTo(0, 0);
+
+            // Fechar menu mobile
+            const navMenu = document.getElementById('nav-menu');
+            if (navMenu) {
+                navMenu.classList.remove('active');
+            }
+        }
+
+        function toggleMenu() {
+            const navMenu = document.getElementById('nav-menu');
+            navMenu.classList.toggle('active');
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════════
+        // FILTROS
+        // ═══════════════════════════════════════════════════════════════════════════════
+
+        function filterProjects(category) {
+            const cards = document.querySelectorAll('.project-card');
+
+            // Atualizar botões ativos
+            document.querySelectorAll('#projects-grid ~ .filter-bar .filter-btn').forEach((btn, idx) => {
+                if ((idx === 0 && category === 'todos') ||
+                    (idx === 1 && category === 'comunicacao') ||
+                    (idx === 2 && category === 'produto') ||
+                    (idx === 3 && category === 'tecnologia')) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Filtrar cards
+            cards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                if (category === 'todos' || cardCategory === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function filterInsights(category) {
+            const cards = document.querySelectorAll('.insight-card');
+
+            cards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                if (category === 'todos' || cardCategory === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function filterJobs(category) {
+            const cards = document.querySelectorAll('.job-card');
+
+            cards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                if (category === 'todos' || cardCategory === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════════
+        // WORK SECTION (SCROLL)
+        // ═══════════════════════════════════════════════════════════════════════════════
+
+        (function initWorkSection() {
+            const section = document.querySelector('[data-component-name="section-our-work"]');
+            if (!section) return;
+
+            const viewer = section.querySelector('[data-work-viewer]');
+            const cards = Array.from(section.querySelectorAll('[data-work-card]'));
+            const currentEl = section.querySelector('[data-work-current]');
+            const totalEl = section.querySelector('[data-work-total]');
+            const header = document.querySelector('header');
+
+            if (!viewer || cards.length === 0) return;
+
+            const updateOffsets = () => {
+                const headerHeight = header ? header.offsetHeight : 0;
+                section.style.setProperty('--work-header-offset', `${headerHeight + 80}px`);
+                viewer.style.height = `${cards.length * 100}vh`;
+            };
+
+            if (totalEl) {
+                totalEl.textContent = String(cards.length).padStart(2, '0');
+            }
+
+            const setActive = (index) => {
+                cards.forEach((card, idx) => {
+                    card.classList.toggle('is-active', idx === index);
+                });
+                if (currentEl) {
+                    currentEl.textContent = String(index + 1).padStart(2, '0');
+                }
+            };
+
+            const update = () => {
+                const rect = viewer.getBoundingClientRect();
+                const scrollY = window.scrollY || window.pageYOffset;
+                const viewerTop = rect.top + scrollY;
+                const total = viewer.offsetHeight - window.innerHeight;
+
+                if (total <= 0) {
+                    setActive(0);
+                    return;
+                }
+
+                const scrolled = Math.min(Math.max(scrollY - viewerTop, 0), total);
+                const progress = scrolled / total;
+                const index = Math.min(cards.length - 1, Math.floor(progress * cards.length));
+
+                setActive(index);
+            };
+
+            let ticking = false;
+            const onScroll = () => {
+                if (ticking) return;
+                ticking = true;
+                window.requestAnimationFrame(() => {
+                    update();
+                    ticking = false;
+                });
+            };
+
+            window.addEventListener('scroll', onScroll);
+            window.addEventListener('resize', () => {
+                updateOffsets();
+                onScroll();
+            });
+            updateOffsets();
+            update();
+        })();
+
+        // ═══════════════════════════════════════════════════════════════════════════════
+        // FORMULÁRIO
+        // ═══════════════════════════════════════════════════════════════════════════════
+
+        document.getElementById('contact-form')?.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Validação
+            const fields = ['name', 'email', 'company', 'role', 'message'];
+            let isValid = true;
+
+            fields.forEach(field => {
+                const input = document.getElementById(`contact-${field}`);
+                const error = document.getElementById(`error-${field}`);
+
+                if (!input.value.trim()) {
+                    isValid = false;
+                    input.classList.add('error');
+                    error.textContent = 'Campo obrigatório';
+                    error.classList.remove('hidden');
+                } else {
+                    input.classList.remove('error');
+                    error.classList.add('hidden');
+                }
+            });
+
+            if (isValid) {
+                // Simulação de envio
+                const btn = this.querySelector('button[type="submit"]');
+                const originalText = btn.textContent;
+
+                btn.innerHTML = '<span class="loader"></span>';
+                btn.disabled = true;
+
+                setTimeout(() => {
+                    const message = document.getElementById('form-message');
+                    message.textContent = 'Obrigado! Entraremos em contato em breve.';
+                    message.classList.remove('hidden');
+
+                    this.reset();
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+
+                    setTimeout(() => {
+                        message.classList.add('hidden');
+                    }, 5000);
+                }, 1500);
+            }
+        });
+        // Efeito de sombra ao rolar
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('header');
+            if (window.scrollY > 10) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+
+</html>
+@media (max-width: 900px) {
+.service-card {
+grid-template-columns: 1fr;
+}
+}
